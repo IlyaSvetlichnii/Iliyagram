@@ -1,0 +1,28 @@
+<div class="posts-wrapper">
+  <div class="post">
+    <div class="post-head">
+        <div class="thumb-img">
+          <div class="user-name">
+           <%= post.user %>
+          </div>
+          <div class="image center-block">
+            <%= link_to (image_tag post.image.url(:medium), class:'img-responsive'), post_path(post) %>
+          </div>
+        </div>
+        <div class="post-bottom">
+          <div class="caption">
+            <div class="user-name">
+              <%= post.user %>
+              <%= post.title %>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+      
+
+            </div>
+          </div>
+</div>
+
+
