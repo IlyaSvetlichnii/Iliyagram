@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
       </button>
       <%= link_to 'Tape', root_path, class: 'navbar-brand' %>
-      <%= link_to 'My page', user_session_path, class: 'navbar-brand' %>
+      <%= link_to 'My page', profile_path(current_user.name), class: 'navbar-brand' %>
 
     </div>
 

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get ':name', to: 'profiles#show', as: :profile 
+  
   post ':name/follow_user', to: 'relationships#follow_user', as: :follow_user
   post ':name/unfollow_user', to: 'relationships#unfollow_user', as: :unfollow_user
 
