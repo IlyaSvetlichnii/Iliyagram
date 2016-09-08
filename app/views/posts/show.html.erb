@@ -2,41 +2,42 @@
   <div class="post">
     <div class="post-head">
       <div class="name">
-        <%= @post.user %>
+        <%= @post.user.name %>
       </div>
     </div>
       <div class="image center-block">
         <%=image_tag @post.image.url(:medium) %>
       </div>
+      <%= render 'like' %>
+      
       <p class="caption">
         <%= @post.title %>
       </p>
       <div class="text-center">
         <%=link_to "Cancel", posts_path %>
       </div>
+      <% if @post.comments %>
+              <% @post.comments.each do |comment| %>
+                <div class="comment">
+                  <div class="user-name">
+                    <%= comment.user.name %>
+                  </div>
+                  <div class="comment-content">
+                    <%= comment.content %>
+                    <% if comment.user == current_user %>
+                      <%= link_to "delete", post_comment_path(@post, comment),
+                                                  method: :delete, 
+                                                  data: { confirm: "Are you sure?" } %>
+                    <% end %>
+                  </div>
+              <% end %>
+              </div>
+      <% end %>
+      <%= form_for([@post, @post.comments.build]) do |f| %>
+        <div class="field">
+          <%= f.text_area :content, placeholder: "Comment..." %>
+        </div>
+        <%= f.submit "Post", class: "btn btn-primary" %>
+      <% end %>
   </div>
 </div>
-
-<% if @post.comments %>
-        <% @post.comments.each do |comment| %>
-          <div class="comment">
-            <div class="user-name">
-              <%= comment.user.name %>
-            </div>
-            <div class="comment-content">
-              <%= comment.content %>
-              <% if comment.user == current_user %>
-                <%= link_to "delete", post_comment_path(@post, comment), method: :delete, data: { confirm: "Are you sure?" } %>
-              <% end %>
-            </div>
-        <% end %>
-        </div>
-<% end %>
-
-
-  <%= form_for([@post, @post.comments.build]) do |f| %>
-    <div class="field">
-      <%= f.text_area :content, placeholder: "Compose new micropost..." %>
-    </div>
-    <%= f.submit "Post", class: "btn btn-primary" %>
-  <% end %>

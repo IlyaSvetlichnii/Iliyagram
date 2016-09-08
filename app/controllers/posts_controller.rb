@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :like] 
 
   def index
     @posts = Post.all
@@ -9,7 +10,7 @@ class PostsController < ApplicationController
   end
 
   def show  
-  @post = Post.find(params[:id])
+   @post = Post.find(params[:id])
   end 
 
   def edit  
@@ -31,16 +32,16 @@ class PostsController < ApplicationController
       render :new
     end
   end
+  
 
-  # def create
-  #   if @post = Post.create(post_params)
-  #     flash[:success] = "Your post has been created!"
-  #     redirect_to posts_path
-  #   else
-  #     flash.now[:alert] = "Your new post couldn't be created!"
-  #     render :new
-  #   end
-  # end
+  def like  
+    if @post.liked_by current_user
+        respond_to do |format|
+          format.html { redirect_to :back }
+          format.js
+        end
+    end
+  end  
 
   def update
     if @post.update(post_params)
@@ -63,4 +64,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(:image, :title)
   end
 
+  def set_post  
+    @post = Post.find(params[:id])
+  end 
 end
